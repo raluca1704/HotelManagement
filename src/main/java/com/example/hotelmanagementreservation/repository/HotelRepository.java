@@ -8,8 +8,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HotelRepository extends JpaRepository<Hotel, String> {
+public interface HotelRepository extends JpaRepository<Hotel, Long> {
         List<Hotel> findAll();
+
         Hotel findById(int id);
+
         void deleteById(int id);
+
+        List<Hotel> findByLatitudeBetweenAndLongitudeBetween(double minLat, double maxLat, double minLon, double maxLon);
+
 }

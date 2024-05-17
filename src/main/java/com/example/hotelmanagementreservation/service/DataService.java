@@ -30,6 +30,17 @@ public class DataService {
             List<Hotel> hotels = mapper.readValue(inputStream, typeReference);
             hotelRepository.saveAll(hotels);
             System.out.println("Hotels data loaded!");
+
+            // Check if the data is successfully stored in the MySQL database
+            List<Hotel> savedHotels = hotelRepository.findAll();
+            if (!savedHotels.isEmpty()) {
+                System.out.println("Data successfully stored in the MySQL database:");
+                for (Hotel hotel : savedHotels) {
+                    System.out.println(hotel);
+                }
+            } else {
+                System.out.println("No hotels found in the MySQL database.");
+            }
         } catch (IOException e) {
             System.out.println("Unable to load hotels data: " + e.getMessage());
         } finally {

@@ -2,10 +2,12 @@ package com.example.hotelmanagementreservation.controller;
 
 import com.example.hotelmanagementreservation.model.Hotel;
 import com.example.hotelmanagementreservation.repository.HotelRepository;
+import com.example.hotelmanagementreservation.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -13,26 +15,29 @@ import java.util.Optional;
 public class HotelController {
 
     @Autowired
-    private HotelRepository hotelRepository;
+    private HotelService hotelService;
 
-    // Get all hotels
+
     @GetMapping
-    public Iterable<Hotel> getAllHotels() {
-        return hotelRepository.findAll();
+    public List<Hotel> getNearbyHotels(@RequestParam double latitude, @RequestParam double longitude, @RequestParam double radius) {
+        return hotelService.findNearbyHotels(latitude, longitude, radius);
     }
 
-    // Get a hotel by ID
     @GetMapping("/{id}")
-    public Optional<Hotel> getHotelById(@PathVariable int id) {
-        return Optional.ofNullable(hotelRepository.findById(id));
+    public Hotel getHotel(@PathVariable Long id) {
+        return hotelService.getHotelById(id);
     }
 
-    // Delete a hotel by ID
-    @DeleteMapping("/{id}")
-    public String deleteHotelById(@PathVariable int id) {
-        hotelRepository.deleteById(id);
-        return "Hotel deleted successfully";
+    @GetMapping("/all")
+    public List<Hotel> getAllHotels() {
+        return hotelService.getAllHotels();
+    }
+
+    @PostMapping
+    public Hotel addHotel(@RequestBody Hotel hotel) {
+        return hotelService.saveHotel(hotel);
     }
 }
+
 
 
