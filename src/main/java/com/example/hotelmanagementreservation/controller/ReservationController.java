@@ -1,4 +1,4 @@
-//package com.example.hotelmanagementreservation.controller;
-//
-//public class ReservationController {
-//}
+package com.example.hotelmanagementreservation.controller;
+
+public class ReservationController {
+}

@@ -1,16 +1,10 @@
-//package com.example.hotelmanagementreservation.repository;
-//
-//import com.example.hotelmanagementreservation.model.Feedback;
-//import com.example.hotelmanagementreservation.model.Hotel;
-//import com.example.hotelmanagementreservation.model.Reservation;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.data.repository.CrudRepository;
-//import org.springframework.stereotype.Repository;
-//
-//import java.util.List;
-//
-//@Repository
-//public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
-//    Feedback findById(int id);
-//    void deleteById(int id);
-//}
+package com.example.hotelmanagementreservation.repository;
+
+import com.example.hotelmanagementreservation.model.Feedback;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
+
+}
