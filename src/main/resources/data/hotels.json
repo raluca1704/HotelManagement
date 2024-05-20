@@ -65,5 +65,31 @@
         "isAvailable": true
       }
     ]
+  },
+  {
+    "id": 4,
+    "name": "Hotel Radison Blu",
+    "latitude": 46.7663784,
+    "longitude": 23.4249095,
+    "rooms": [
+      {
+        "roomNumber": 210,
+        "type": 2,
+        "price": 200,
+        "isAvailable": true
+      },
+      {
+        "roomNumber": 125,
+        "type": 1,
+        "price": 350,
+        "isAvailable": true
+      },
+      {
+        "roomNumber": 87,
+        "type": 1,
+        "price": 300,
+        "isAvailable": false
+      }
+    ]
   }
 ]

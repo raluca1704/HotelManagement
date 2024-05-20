@@ -10,6 +10,11 @@
 <button id="loadHotelsBtn">Show All Hotels</button>
 <div id="hotelsContainer"></div>
 <div id="roomsContainer" style="display: none;"></div> <!-- Hidden by default -->
+<div>
+    <label for="radius">Search Nearby Hotels (Radius in km):</label>
+    <input type="text" id="radius" name="radius">
+    <button onclick="findNearbyHotels()">Search</button>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

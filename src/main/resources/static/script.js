@@ -25,11 +25,17 @@ function loadHotels() {
                 data.forEach(hotel => {
                     const hotelDiv = document.createElement("div");
                     hotelDiv.className = "hotel";
+                    hotelDiv.dataset.hotelId = hotel.id; // Add hotel ID as a data attribute
                     hotelDiv.innerHTML = `<h3>${hotel.name}</h3><p>Latitude: ${hotel.latitude}, Longitude: ${hotel.longitude}</p>`;
-                    hotelDiv.addEventListener("click", () => {
-                        showRooms(hotel.id);
-                    });
                     hotelsContainer.appendChild(hotelDiv);
+                });
+
+                // Add event listener to hotel elements to handle selection
+                hotelsContainer.querySelectorAll(".hotel").forEach(hotelDiv => {
+                    hotelDiv.addEventListener("click", () => {
+                        const selectedHotelId = hotelDiv.dataset.hotelId;
+                        showRooms(selectedHotelId);
+                    });
                 });
             } else {
                 hotelsContainer.innerHTML = "<p>No hotels found.</p>";
@@ -71,4 +77,49 @@ function showRooms(hotelId) {
             const roomsContainer = document.getElementById("roomsContainer");
             roomsContainer.innerHTML = "<p>Error loading rooms. Please try again later.</p>";
         });
+}
+
+function findNearbyHotels() {
+    const radius = document.getElementById('radius').value;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            fetch(`/api/hotels/nearby?latitude=${latitude}&longitude=${longitude}&radius=${radius}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const resultsDiv = document.getElementById('hotelsContainer');
+                    resultsDiv.innerHTML = '';
+
+                    if (data.length > 0) {
+                        data.forEach(hotel => {
+                            const hotelDiv = document.createElement('div');
+                            hotelDiv.className = "hotel";
+                            hotelDiv.dataset.hotelId = hotel.id; // Add hotel ID as a data attribute
+                            hotelDiv.innerHTML = `<h3>${hotel.name}</h3><p>Latitude: ${hotel.latitude}, Longitude: ${hotel.longitude}</p>`;
+                            resultsDiv.appendChild(hotelDiv);
+                        });
+                    } else {
+                        resultsDiv.innerHTML = "<p>No nearby hotels found.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching nearby hotels:', error);
+                    const resultsDiv = document.getElementById('hotelsContainer');
+                    resultsDiv.innerHTML = "<p>Error loading nearby hotels. Please try again later.</p>";
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+            alert('Error getting location. Please allow location access and try again.');
+        });
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
 }
